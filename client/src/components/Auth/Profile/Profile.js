@@ -27,7 +27,7 @@ export const Profile = () => {
             {!user ? (
                 <h3>Contest loading...</h3>
             ) : (
-                <>
+                <div id="profile-id">
                     <form className="profile">
                         <img
                             src={require("../../../assets/images/profile.png")}
@@ -71,7 +71,7 @@ export const Profile = () => {
                             )}
                         </div>
                     </div>
-                </>
+                </div>
             )}
         </>
     );

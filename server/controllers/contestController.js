@@ -76,7 +76,7 @@ function addPhoto(req, res, next) {
     const { _id: userId } = req.user;
     const contestId = req.body.id;
     const contestImg = req.body.contestImg;
-
+    console.log(contestImg);
     contestModel
         .updateOne(
             { _id: contestId },

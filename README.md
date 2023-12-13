@@ -30,3 +30,5 @@ Libraries:
 - react-datepicker;
 - react-hook-form;
 - jquery.
+
+* RUN both client and server parts with "npm i" and "npm start"...

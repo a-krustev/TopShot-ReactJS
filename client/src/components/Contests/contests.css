@@ -212,5 +212,5 @@ Contests Page
   }
   
   .new_photo button {
-  margin-top: 28px;
+    margin: 28px 10px 0 auto;
   }

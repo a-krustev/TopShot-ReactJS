@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as authService from "../services/authService";
 import { useCookies } from "react-cookie";
@@ -7,52 +7,42 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
-    const [user, setUser] = useState({});
     const [cookies, setCookies, removeCookies] = useCookies();
-    
+
     const onLoginSubmit = async ({ email, password }) => {
         try {
             const token = await authService.login({ email, password });
-            setCookies("auth-cookie", token);
+            setCookies("auth-cookie", token, { path: "/" });
             navigate("/contests");
         } catch (error) {
-            console.log(error.message);
+            alert(error.message);
         }
     };
 
     const onRegisterSubmit = async (values) => {
-        const { rePassword, ...registerData } = values;
+        const { errors, rePassword, ...registerData } = values;
         if (rePassword !== registerData.password) {
             console.log("Passwords not equal!");
             return;
         }
-        
         try {
-            await authService.register(registerData);
+            const token = await authService.register(registerData);
+            setCookies("auth-cookie", token, { path: "/" });
             navigate("/contests");
         } catch (error) {
-            console.log(error.message);
+            alert(error)
         }
     };
-    
+
     const onLogout = async () => {
         await authService.logout();
         removeCookies("auth-cookie");
     };
-    
-    const onGetProfile = async () => {
-        const result = await authService.getProfile();
-        setUser(result);
-        return;
-    };
-    
 
     const contextValues = {
         onLoginSubmit,
         onRegisterSubmit,
         onLogout,
-        onGetProfile,
-        user,
         isAuthenticated: !!cookies["auth-cookie"],
     };
 

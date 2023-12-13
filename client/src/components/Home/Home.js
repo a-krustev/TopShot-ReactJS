@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ContestThumb } from "./ContestThumb";
 import { useEffect } from "react";
 import { useContestContext } from "../../contexts/ContestContext";
+import './home.css'
 
 export const Home = () => {
     const { latestContests, onGetLatestContests } = useContestContext();

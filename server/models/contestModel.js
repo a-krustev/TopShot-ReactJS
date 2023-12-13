@@ -3,19 +3,23 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const urlValidator = /^https?:\/\/.*/;
 
-const photoSchema = new mongoose.Schema({
-    photoUrl: {
-        type: String,
-        required: true,
-        unique: true,
-        validate: [
-            urlValidator,
-            "Image url must start with http:// or https://",
-        ],
+const photoSchema = new mongoose.Schema(
+    {
+        photoUrl: {
+            type: String,
+            required: true,
+            unique: true,
+            validate: [
+                urlValidator,
+                "Image url must start with http:// or https://",
+            ],
+            index: true,
+        },
+        photographer: { type: ObjectId, ref: "User" },
+        likes: [],
     },
-    photographer: {type: ObjectId, ref: "User"},
-    likes: []
-});
+    { _id: false }
+);
 
 const contestSchema = new mongoose.Schema(
     {
@@ -39,7 +43,7 @@ const contestSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        photos: {type: [[photoSchema]], default: []},
+        photos: { type: [[photoSchema]], default: [] },
         prize: {
             type: Number,
             required: true,

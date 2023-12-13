@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useContestContext } from "../../contexts/ContestContext";
 import { CategoryContestThumb } from "./CategoryContestThumb/CategoryContestThumb";
+import './categories.css'
 
 
 export const Categories = () => {

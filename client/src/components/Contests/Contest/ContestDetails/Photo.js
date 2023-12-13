@@ -1,8 +1,10 @@
 import * as contestService from "../../../../services/contestService";
 import { useParams } from "react-router-dom";
-import Popup from 'react-popup'
+import Popup from "react-popup";
+import { useAuthContext } from "../../../../contexts/AuthContext";
 
 export const Photo = ({ _id, photoUrl }) => {
+    const { isAuthenticated } = useAuthContext();
     const { contestId } = useParams();
     const onPhotoLike = async (e) => {
         e.preventDefault();
@@ -13,9 +15,11 @@ export const Photo = ({ _id, photoUrl }) => {
     return (
         <span className="photo-box">
             <img src={photoUrl} alt="Contest" />
-            <div className="like-box">
-                <button onClick={onPhotoLike}>Like</button>
-            </div>
+            {isAuthenticated && (
+                <div className="like-box">
+                    <button onClick={onPhotoLike}>Like</button>
+                </div>
+            )}
         </span>
     );
 };

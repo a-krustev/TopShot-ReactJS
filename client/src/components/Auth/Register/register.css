@@ -1,0 +1,78 @@
+/* User Register Form */
+
+.user_register {
+    display: block;
+    max-width: 300px;
+    margin: 100px auto 100px auto;
+  }
+  
+  .user_register label {
+  color: #afafaf;
+  display: block;
+  margin-bottom: 5px;
+  }
+  
+  .user_register input[type="text"],
+  .user_register input[type="email"],
+  .user_register input[type="password"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #DDD;
+  color: #666;
+  }
+  
+  .user_register input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  float: left;
+  margin-right: 8px;
+  }
+  
+  .user_register input[type="checkbox"]+label {
+  float: left;
+  color: #afafaf;
+  }
+  
+  .user_register .checkbox {
+  margin-bottom: 10px;
+  clear: both;
+  overflow: hidden;
+  }
+  
+  .user_register button {
+  margin-top: 28px;
+  }
+  .user_register label {
+    color: #afafaf;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .user_register input[type="text"],
+  .user_register input[type="email"],
+  .user_register input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #DDD;
+    color: #666;
+  }
+  
+  .user_register input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    float: left;
+    margin-right: 8px;
+  }
+  
+  .user_register input[type="checkbox"]+label {
+    float: left;
+    color: #afafaf;
+  }
+  
+  .user_register .checkbox {
+    margin-bottom: 10px;
+    clear: both;
+    overflow: hidden;
+  }

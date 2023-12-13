@@ -21,7 +21,7 @@ function register(req, res, next) {
             createdUser = removePassword(createdUser);
 
             const token = utils.jwt.createToken({ id: createdUser._id });
-            res.status(200).send(createdUser);
+            res.status(200).send(JSON.stringify(token));
         })
         .catch((err) => {
             if (err.name === "MongoError" && err.code === 11000) {
@@ -40,12 +40,11 @@ function register(req, res, next) {
 
 function login(req, res, next) {
     const { email, password } = req.body;
-
+    
     userModel
         .findOne({ email })
         .then((user) => {
-            // console.log(user ? user.matchPassword(password) : false);
-            return Promise.all([user, user ? true : false]);
+            return Promise.all([user, user ? user.matchPassword(password) : false]);
         })
         .then(([user, match]) => {
             if (!match) {

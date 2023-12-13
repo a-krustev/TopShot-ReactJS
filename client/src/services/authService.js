@@ -25,10 +25,10 @@ export const register = async (data) => {
         credentials: "include",
         body: JSON.stringify(data),
     });
-    if (response.status !== 200) {
-        throw new Error("Wrong email or password!");
-    }
     const result = await response.json();
+    if (response.status !== 200) {
+        throw new Error(result.message);
+    }
     return result;
 };
 
@@ -44,6 +44,5 @@ export const logout = async () => {
 export const getProfile = async () => {
     return await fetch(baseUrl + "/users/profile", {
         credentials: "include",
-    })
-        .then((res) => res.json())
+    }).then((res) => res.json());
 };

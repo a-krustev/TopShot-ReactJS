@@ -1,13 +1,9 @@
 import { Contest } from "./Contest/Contest";
-import { useEffect } from "react";
 import { useContestContext } from "../../contexts/ContestContext";
+import './contests.css'
 
 export const Contests = () => {
-    const { contests, onGetAllContests } = useContestContext();
-
-    useEffect(() => {
-        onGetAllContests();
-    }, []);
+    const { contests } = useContestContext();
 
     return (
         <section className="photos-videos">

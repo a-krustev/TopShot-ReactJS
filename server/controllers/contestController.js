@@ -2,12 +2,13 @@ const { userModel, categoryModel, contestModel } = require("../models");
 const { isOwner } = require("../utils/guard");
 
 function newContest(contestData, authorId) {
-    const title = contestData.contestTitle;
+    const title = contestData.title;
     const titleImg = contestData.titleImg;
     const category = contestData.category;
     const prize = contestData.prize;
     const startDate = contestData.startDate;
     const endDate = contestData.endDate;
+    console.log(contestData);
     return contestModel.create({
         title,
         authorId,
@@ -24,9 +25,11 @@ function getLatestsContests(req, res, next) {
     endOfDay.setUTCHours(23, 59, 59, 999);
     const limit = Number(req.query.limit) || 0;
     contestModel
-        .find({endDate: {
-            $gt: endOfDay,
-        }})
+        .find({
+            endDate: {
+                $gt: endOfDay,
+            },
+        })
         .sort({ created_at: -1 })
         .limit(limit)
         .then((contests) => {
@@ -78,7 +81,7 @@ function addPhoto(req, res, next) {
         .updateOne(
             { _id: contestId },
             {
-                $push: {
+                $addToSet: {
                     photos: {
                         photoUrl: contestImg,
                         photographer: userId,
@@ -109,8 +112,7 @@ function addPhoto(req, res, next) {
                     }
                 });
         })
-        .then((updatedContest) => {
-            console.log(updatedContest);
+        .then(() => {
             res.status(200).send({ message: "Photo added!" });
         })
         .catch(next);
@@ -133,16 +135,12 @@ function likePhoto(req, res, next) {
 
 function editContest(req, res, next) {
     const { contestId } = req.params;
-    const { contestText } = req.body;
-    const { _id: userId } = req.user;
+    const data = req.body;
+    const { _id: authorId } = req.user;
 
     // if the userId is not the same as this one of the contest, the contest will not be updated
     contestModel
-        .findOneAndUpdate(
-            { _id: contestId, userId },
-            { text: contestText },
-            { new: true }
-        )
+        .findOneAndUpdate({ _id: contestId, authorId }, data, { new: true })
         .then((updatedContest) => {
             if (updatedContest) {
                 res.status(200).json(updatedContest);
@@ -154,20 +152,10 @@ function editContest(req, res, next) {
 }
 
 function deleteContest(req, res, next) {
-    const { contestId, themeId } = req.params;
-    const { _id: userId } = req.user;
+    const { contestId } = req.params;
+    const { _id: authorId } = req.user;
 
-    Promise.all([
-        contestModel.findOneAndDelete({ _id: contestId, userId }),
-        userModel.findOneAndUpdate(
-            { _id: userId },
-            { $pull: { contests: contestId } }
-        ),
-        categoryModel.findOneAndUpdate(
-            { _id: themeId },
-            { $pull: { contests: contestId } }
-        ),
-    ])
+    Promise.all([contestModel.findOneAndDelete({ _id: contestId, authorId })])
         .then(([deletedOne, _, __]) => {
             if (deletedOne) {
                 res.status(200).json(deletedOne);
@@ -182,12 +170,12 @@ function like(req, res, next) {
     const { contestId } = req.params;
     const { _id: userId } = req.user;
     // console.log('contestsid: ', contestId);
-    
+
     contestModel
-    .updateOne(
-        { _id: contestId },
-        { $addToSet: { likes: userId } },
-        { new: true }
+        .updateOne(
+            { _id: contestId },
+            { $addToSet: { likes: userId } },
+            { new: true }
         )
         .then(() => res.status(200).json({ message: "Liked successful!" }))
         .catch(next);

@@ -35,7 +35,7 @@ export const AddPhoto = () => {
                     placeholder="Add photo..."
                     value={photoUrl}
                     onChange={onChangeHandler}
-                    required
+                    // required
                 />
                 <p className="error">Image url is required.</p>
                 <p className="error">

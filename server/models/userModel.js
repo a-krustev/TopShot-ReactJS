@@ -14,11 +14,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        minlength: [5, 'Username should be at least 5 characters'],
+        minlength: [3, 'Username should be at least 3 characters'],
         maxlength: [15, 'Username should be at most 15 characters'],
         validate: {
             validator: function (v) {
-                return /^[a-z_0-9]{5,15}/g.test(v);
+                return /^[a-z_0-9]{3,15}/g.test(v);
             },
             message: props => `${props.value} must contains only lowercase letters, digits and lowercase(_)!`
         },
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: [6, 'Password should be at least 6 characters']
+        minlength: [4, 'Password should be at least 4 characters']
     },
     contestsOwner: [{
         type: ObjectId,

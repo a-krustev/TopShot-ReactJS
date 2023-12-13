@@ -1,0 +1,45 @@
+/* New Contest Form */
+
+.new_contest {
+    display: block;
+    max-width: 300px;
+    margin: 150px auto 50px auto;
+  }
+  
+  .new_contest label {
+  color: #afafaf;
+  display: block;
+  margin-bottom: 5px;
+  }
+  
+  .new_contest input[type="text"],
+  .new_contest input[type="email"],
+  .new_contest input[type="password"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #DDD;
+  color: #666;
+  }
+  
+  .new_contest input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  float: left;
+  margin-right: 8px;
+  }
+  
+  .new_contest input[type="checkbox"]+label {
+  float: left;
+  color: #afafaf;
+  }
+  
+  .new_contest .checkbox {
+  margin-bottom: 10px;
+  clear: both;
+  overflow: hidden;
+  }
+  
+  .new_contest button {
+  margin: 28px 10px 0 auto;
+  }

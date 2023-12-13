@@ -10,5 +10,7 @@ router.get('/list', contestController.getLatestsContests);
 router.get('/detail/:contestId', contestController.getContest);
 router.post('/add-photo', auth(), contestController.addPhoto);
 router.put('/like', auth(), contestController.likePhoto);
+router.put('/edit/:contestId', auth(), contestController.editContest);
+router.delete('/delete/:contestId', auth(), contestController.deleteContest);
 
 module.exports = router

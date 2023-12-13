@@ -1,0 +1,85 @@
+/* User Login Form */
+
+.user_login {
+    display: block;
+    max-width: 300px;
+    margin: 100px auto 100px auto;
+  }
+  
+  .user_login label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .user_login input[type="text"],
+  .user_login input[type="email"],
+  .user_login input[type="password"] {
+    display: block;
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #DDD;
+    color: #666;
+  }
+  
+  .user_login input[type="checkbox"] {
+    float: left;
+    margin-right: 10px;
+    width: 22px;
+    height: 22px;
+  }
+  
+  .user_login input[type="checkbox"]+label {
+    float: left;
+  }
+  
+  .user_login .checkbox {
+    margin-bottom: 10px;
+    clear: both;
+    overflow: hidden;
+  }
+  
+  .user_login input[type="submit"] {
+    margin-top: 28px;
+  }
+  
+  .user_login label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .user_login input[type="text"],
+  .user_login input[type="email"],
+  .user_login input[type="password"] {
+    display: block;
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #DDD;
+    color: #666;
+  }
+  
+  .user_login input[type="checkbox"] {
+    float: left;
+    margin-right: 10px;
+    width: 22px;
+    height: 22px;
+  }
+  
+  .user_login input[type="checkbox"]+label {
+    float: left;
+  }
+  
+  .user_login .checkbox {
+    margin-bottom: 10px;
+    clear: both;
+    overflow: hidden;
+  }
+  
+  .forgot_password {
+    display: block;
+    margin: 20px 0 10px;
+    clear: both;
+    overflow: hidden;
+    text-decoration: none;
+    color: #00bdfe;
+    transition: all .3s;
+  }

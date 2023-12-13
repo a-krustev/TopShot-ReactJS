@@ -1,16 +1,68 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Photo } from "./Photo";
 import styles from "./ContestDetails.module.css";
 import { useContestContext } from "../../../../contexts/ContestContext";
+import { deleteContest } from "../../../../services/contestService";
+import { useState } from "react";
+import { getProfile } from "../../../../services/authService";
+import { getOne } from "../../../../services/contestService";
 
 export const ContestDetails = () => {
+    var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+
+    const navigate = useNavigate();
     const { contestId } = useParams();
-    const { contest, onGetContest } = useContestContext();
+    const [contest, setContest] = useState({});
+    const { onDeleteContest } = useContestContext();
+    const [user, setUser] = useState();
+
     useEffect(() => {
-        onGetContest(contestId);
+        Promise.all([getOne(contestId), getProfile()]).then(
+            ([contest, user]) => {
+                contest.endDate = new Date(contest.endDate).setUTCHours(
+                    20,
+                    59,
+                    59,
+                    999
+                );
+                setContest(contest);
+                setUser(user);
+            }
+        );
     }, [contestId]);
+
+    const isOwner = contest && user ? contest.authorId === user._id : false;
+
+    const deleteHandler = async (e) => {
+        e.preventDefault();
+        // eslint-disable-next-line no-restricted-globals
+        const result = confirm(
+            `Are you sure you want to delete ${contest.title}`
+        );
+
+        if (result) {
+            await deleteContest(contestId);
+
+            onDeleteContest(contestId);
+            navigate(`/contests`);
+        }
+    };
 
     return (
         <>
@@ -33,7 +85,17 @@ export const ContestDetails = () => {
                                         <div className="counter">
                                             <div>
                                                 <div className="value">
-                                                    {contest.endDate}
+                                                    {`${new Date(
+                                                        contest.endDate
+                                                    ).getDate()}-${
+                                                        months[
+                                                            new Date(
+                                                                contest.endDate
+                                                            ).getMonth()
+                                                        ]
+                                                    }-${new Date(
+                                                        contest.endDate
+                                                    ).getFullYear()}`}
                                                 </div>
                                             </div>
                                         </div>
@@ -68,17 +130,49 @@ export const ContestDetails = () => {
                                             <Photo key={photo._id} {...photo} />
                                         ))}
                                 </div>
-                                <div className="col-lg-12">
-                                    <div className="main-content">
-                                        <div className="main-button">
-                                            <Link
-                                                to={`/contests/${contest._id}/add-photo`}
-                                            >
-                                                Submit Your Photo
-                                            </Link>
+                                {!isOwner && (
+                                    <div className="col-lg-12">
+                                        <div className="main-content">
+                                            <div className="main-button">
+                                                <Link
+                                                    to={`/contests/${contest._id}/add-photo`}
+                                                >
+                                                    Submit Your Photo
+                                                </Link>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                )}
+                                {isOwner && (
+                                    <div>
+                                        <div className={styles.collg4}>
+                                            <div className="main-content">
+                                                <div className="main-button">
+                                                    <button
+                                                        onClick={deleteHandler}
+                                                    >
+                                                        Delete Contest
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <div className="main-content">
+                                                <div className="main-button">
+                                                    <Link
+                                                        to={`/contests/${contest._id}/edit`}
+                                                        className="details-button"
+                                                        onClick={() => {
+                                                            window.scroll(0, 0);
+                                                        }}
+                                                    >
+                                                        Edit Contest
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

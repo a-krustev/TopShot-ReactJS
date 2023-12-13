@@ -1,6 +1,6 @@
 const baseUrl = "http://localhost:3030/api/contest";
 
-export const addContest = async (data) => {    
+export const addContest = async (data) => {
     const response = await fetch(baseUrl, {
         method: "POST",
         headers: {
@@ -59,6 +59,28 @@ export const addPhoto = async (contestId, contestImg) => {
     
     const response = await fetch(baseUrl + "/add-photo", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    return result;
+};
+
+export const deleteContest = async (id) => {    
+    const response = await fetch(baseUrl + "/delete/" + id, {
+        method: "DELETE",
+        credentials: "include",
+    });
+    const result = await response.json();
+    return result;
+};
+
+export const editContest = async (id ,data) => {  
+    const response = await fetch(baseUrl + "/edit/" + id, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },

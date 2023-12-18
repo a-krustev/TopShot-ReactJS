@@ -35,7 +35,10 @@ export const Register = () => {
                 </label>
                 <input
                     {...register("username", {
-                        required: true,
+                        required: {
+                            value: true,
+                            message: "Username is required",
+                        },
                         minLength: {
                             value: 3,
                             message:
@@ -45,7 +48,7 @@ export const Register = () => {
                             value: 15,
                             message:
                                 "Username should be between 3 and 15 characters and must contains only lowercase letters, numbers and _",
-                        },
+                        }
                     })}
                     placeholder="Username"
                     type="text"
@@ -65,7 +68,10 @@ export const Register = () => {
                 </label>
                 <input
                     {...register("email", {
-                        required: true,
+                        required: {
+                            value: true,
+                            message: "Email is required",
+                        },
                         pattern: {
                             value: emailReg,
                             message: "Enter valid email address", // JS only: <p>error message</p> TS only support string
@@ -89,7 +95,10 @@ export const Register = () => {
                 </label>
                 <input
                     {...register("password", {
-                        required: true,
+                        required: {
+                            value: true,
+                            message: "Password is required",
+                        },
                         minLength: {
                             value: 4,
                             message:
@@ -101,7 +110,7 @@ export const Register = () => {
                     name="password"
                     id="password"
                 />
-            </p>            
+            </p>
             {errors.password && (
                 <p className="form_error">{errors.password.message}</p>
             )}
@@ -124,7 +133,7 @@ export const Register = () => {
                     name="rePassword"
                     id="re-password"
                 />
-            </p>          
+            </p>
             {errors.rePassword && (
                 <p className="form_error">{errors.rePassword.message}</p>
             )}
